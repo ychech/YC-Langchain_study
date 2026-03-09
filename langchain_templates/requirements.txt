@@ -1,0 +1,19 @@
+# LangChain 1.0.x 核心包
+langchain>=1.0.0
+langchain-core>=0.3.0
+langchain-openai>=0.3.0
+
+# LangChain 社区包（RAG等需要）
+langchain-community>=0.3.0
+
+# 向量库和嵌入
+faiss-cpu>=1.7.4
+sentence-transformers>=2.2.0
+transformers>=4.30.0
+
+# 工具
+python-dotenv>=1.0.0
+pydantic>=2.0.0
+
+# 可选：用于更高级的 RAG
+# chromadb>=0.4.0
