@@ -149,7 +149,7 @@ def demo_base_tool():
     
     print("   工具名称:", translator.name)
     print("   工具描述:", translator.description)
-    print("   参数模式:", translator.args_schema.schema())
+    print("   参数模式:", translator.args_schema.model_json_schema())
     
     print("\n   调用翻译工具:")
     result = translator.invoke({"text": "hello", "target_language": "zh"})
@@ -221,7 +221,7 @@ def demo_tool_binding():
     
     print("""
    from langchain_openai import ChatOpenAI
-   from langchain.agents import create_tool_calling_agent
+   from langchain_classic.agents import create_tool_calling_agent
    
    # 创建模型
    llm = ChatOpenAI(model="gpt-4")

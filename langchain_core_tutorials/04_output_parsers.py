@@ -16,18 +16,13 @@ from langchain_core.output_parsers import (
     CommaSeparatedListOutputParser
 )
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.pydantic_v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 import os
-from pathlib import Path
 
 # 加载环境变量
-env_path = Path(__file__).parent.parent / ".env"
-if env_path.exists():
-    load_dotenv(env_path)
-else:
-    load_dotenv()
+load_dotenv()
 
 
 def demo_str_parser():
@@ -56,8 +51,9 @@ def demo_str_parser():
     
     print(f"   原始响应类型: {type(response)}")
     print(f"   解析后类型: {type(parsed)}")
+    print(f"   解析结果: {response}")
     print(f"   解析结果: {parsed}")
-    
+
     # 在 LCEL 链中使用
     print("\n   在 LCEL 链中使用:")
     chain = llm | parser

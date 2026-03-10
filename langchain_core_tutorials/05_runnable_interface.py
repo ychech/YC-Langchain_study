@@ -54,11 +54,11 @@ def demo_runnable_lambda():
     print(f"   输入: [1, 2, 3, 4, 5]")
     print(f"   输出: {results}")
     
-    # 流式执行
+    # 流式执行（stream 处理单个输入，逐个产出结果）
     print("\n3️⃣ 流式执行:")
-    print(f"   输入: [10, 20, 30]")
+    print(f"   输入: 100")
     print(f"   输出: ", end="")
-    for chunk in runnable.stream([10, 20, 30]):
+    for chunk in runnable.stream(100):
         print(f"{chunk} ", end="")
     print()
 
@@ -80,16 +80,16 @@ def demo_runnable_passthrough():
     print(f"   输出: '{result}'")
     print(f"   说明: 原样返回输入")
     
-    # 在链中使用
+    # 在链中使用（assign 需要字典输入）
     print("\n2️⃣ 在 LCEL 链中使用:")
     
     chain = RunnablePassthrough.assign(
-        upper=lambda x: x.upper(),
-        length=lambda x: len(x)
+        upper=lambda x: x["text"].upper(),
+        length=lambda x: len(x["text"])
     )
     
-    result = chain.invoke("hello")
-    print(f"   输入: 'hello'")
+    result = chain.invoke({"text": "hello"})
+    print(f"   输入: {{'text': 'hello'}}")
     print(f"   输出: {result}")
     print(f"   说明: 保留原始输入，并添加新字段")
 

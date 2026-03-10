@@ -15,14 +15,10 @@ from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 import time
 import os
-from pathlib import Path
+
 
 # 加载环境变量
-env_path = Path(__file__).parent.parent / ".env"
-if env_path.exists():
-    load_dotenv(env_path)
-else:
-    load_dotenv()
+load_dotenv()
 
 
 class LoggingCallbackHandler(BaseCallbackHandler):
@@ -120,7 +116,7 @@ def demo_basic_callback():
     )
     
     print("\n1️⃣ 单次调用:")
-    response = llm.invoke("你好", callbacks=callbacks)
+    response = llm.invoke("你好")
     print(f"\n   最终输出: {response.content[:30]}...")
 
 
@@ -282,8 +278,6 @@ def show_callback_events():
 def main():
     demo_basic_callback()
     demo_chain_callback()
-    demo_multiple_callbacks()
-    demo_custom_metrics()
     show_callback_events()
     
     print("\n" + "=" * 60)

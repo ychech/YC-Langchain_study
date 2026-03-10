@@ -19,11 +19,7 @@ import os
 from pathlib import Path
 
 # 加载环境变量
-env_path = Path(__file__).parent.parent / ".env"
-if env_path.exists():
-    load_dotenv(env_path)
-else:
-    load_dotenv()
+load_dotenv()
 
 
 # ========== 1. 定义状态 ==========

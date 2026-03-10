@@ -10,10 +10,8 @@ LangChain Community 核心概念 06 - 检索器 (Retrievers)
 - ContextualCompression: 上下文压缩
 """
 from langchain_community.vectorstores import FAISS
-from langchain_community.retrievers import (
-    MultiQueryRetriever,
-    BM25Retriever
-)
+from langchain_community.retrievers import BM25Retriever
+from langchain_classic.retrievers import MultiQueryRetriever
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.documents import Document
 from langchain_core.retrievers import BaseRetriever
@@ -28,6 +26,15 @@ if env_path.exists():
     load_dotenv(env_path)
 else:
     load_dotenv()
+
+# 禁用 Hugging Face 警告和日志
+os.environ["HF_HUB_DISABLE_SYMLINKS_WARNING"] = "1"
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+import logging
+import warnings
+warnings.filterwarnings("ignore")
+logging.getLogger("transformers").setLevel(logging.ERROR)
+logging.getLogger("huggingface_hub").setLevel(logging.ERROR)
 
 
 def get_sample_documents():
@@ -200,13 +207,12 @@ def demo_custom_retriever():
     
     print("\n🏗️ 继承 BaseRetriever 创建自定义检索器:\n")
     
+    from pydantic import Field
+    
     class CategoryFilterRetriever(BaseRetriever):
         """按分类过滤的检索器"""
-        
-        def __init__(self, vectorstore, category: str = None, **kwargs):
-            super().__init__(**kwargs)
-            self.vectorstore = vectorstore
-            self.category = category
+        vectorstore: object = Field(..., description="向量存储")
+        category: str = Field(None, description="分类过滤")
         
         def _get_relevant_documents(self, query: str) -> List[Document]:
             """获取相关文档"""
@@ -227,7 +233,7 @@ def demo_custom_retriever():
     )
     vectorstore = FAISS.from_documents(docs, embeddings)
     
-    retriever = CategoryFilterRetriever(vectorstore, category="ai")
+    retriever = CategoryFilterRetriever(vectorstore=vectorstore, category="ai")
     
     query = "学习"
     results = retriever.invoke(query)

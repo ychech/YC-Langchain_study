@@ -7,6 +7,9 @@ LangChain Community 核心概念 03 - 向量存储 (Vector Stores)
 - FAISS: Facebook 的相似度搜索库
 - Chroma: 开源向量数据库
 - 向量检索: similarity_search, max_marginal_relevance_search
+注意
+  source venv/bin/activate
+  python 03_vector_stores.py
 """
 from langchain_community.vectorstores import FAISS, Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
@@ -16,11 +19,16 @@ import os
 from pathlib import Path
 
 # 加载环境变量
-env_path = Path(__file__).parent.parent / ".env"
-if env_path.exists():
-    load_dotenv(env_path)
-else:
-    load_dotenv()
+load_dotenv()
+
+# 禁用 Hugging Face 警告和日志
+os.environ["HF_HUB_DISABLE_SYMLINKS_WARNING"] = "1"
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+import logging
+import warnings
+warnings.filterwarnings("ignore")
+logging.getLogger("transformers").setLevel(logging.ERROR)
+logging.getLogger("huggingface_hub").setLevel(logging.ERROR)
 
 
 def get_sample_documents():

@@ -166,8 +166,8 @@ def demo_embedding_cache():
     print("\n💾 缓存嵌入结果避免重复计算:\n")
     
     print("""
-   from langchain.embeddings import CacheBackedEmbeddings
-   from langchain.storage import LocalFileStore
+   from langchain_core.embeddings import CacheBackedEmbeddings
+   from langchain_core.storage import LocalFileStore
    
    # 创建底层嵌入模型
    underlying_embeddings = HuggingFaceEmbeddings(

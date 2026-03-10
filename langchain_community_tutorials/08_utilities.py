@@ -14,11 +14,7 @@ import os
 from pathlib import Path
 
 # 加载环境变量
-env_path = Path(__file__).parent.parent / ".env"
-if env_path.exists():
-    load_dotenv(env_path)
-else:
-    load_dotenv()
+load_dotenv()
 
 
 def demo_serpapi():
@@ -237,7 +233,7 @@ def demo_integration_with_tools():
     
     print("""
    from langchain_community.utilities import SerpAPIWrapper
-   from langchain.tools import Tool
+   from langchain_core.tools import Tool
    
    # 创建 Utility
    search = SerpAPIWrapper()
@@ -250,7 +246,7 @@ def demo_integration_with_tools():
    )
    
    # 在 Agent 中使用
-   from langchain.agents import create_tool_calling_agent
+   from langchain_classic.agents import create_tool_calling_agent
    
    tools = [search_tool]
    agent = create_tool_calling_agent(llm, tools, prompt)
